@@ -6,202 +6,197 @@
 <title>Level Up</title>
 
 <style>
-:root {
-  --bg-dark: #0a0a12;
-  --neon-blue: #00f2ff;
-  --neon-cyan: #00ffe1;
-  --neon-purple: #8a2eff;
-  --text-light: #e6faff;
+:root{
+  --bg:#0b0f1a;
+  --blue:#00f2ff;
+  --cyan:#00ffe1;
+  --purple:#8a2eff;
+  --text:#eafcff;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
   font-family: 'Segoe UI', sans-serif;
 }
 
-body {
-  background: var(--bg-dark);
-  color: var(--text-light);
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+body{
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  scroll-behavior:smooth;
 }
 
-/* Animated Gradient Background */
-body::before {
-  content: "";
-  position: fixed;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, #0a0a12, #111133, #0a0a12);
-  animation: gradientMove 12s ease infinite;
-  z-index: -1;
+/* Animated gradient background */
+body::before{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  background:
+    radial-gradient(circle at 20% 30%, #141433, transparent),
+    radial-gradient(circle at 80% 70%, #220044, transparent);
+  animation: bgMove 20s infinite alternate ease-in-out;
+  z-index:-1;
 }
 
-@keyframes gradientMove {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(-25%, -25%); }
-  100% { transform: translate(0,0); }
+@keyframes bgMove{
+  from{ transform:translate(0,0); }
+  to{ transform:translate(-12%,-10%); }
 }
 
-section {
-  min-height: 100vh;
-  padding: 80px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+section{
+  min-height:100vh;
+  padding:80px 20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s ease;
 }
 
-/* Hero */
-h1 {
-  font-size: 3rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: pulse 2s infinite;
+section.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-@keyframes pulse {
-  0%,100% { text-shadow: 0 0 10px var(--neon-blue); }
-  50% { text-shadow: 0 0 25px var(--neon-purple); }
+h1{
+  font-size:3rem;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.subtitle {
-  margin-top: 15px;
-  opacity: 0.8;
+.subtitle{
+  margin-top:20px;
+  opacity:.8;
 }
 
-.btn {
-  margin-top: 30px;
-  padding: 12px 28px;
-  border: 2px solid var(--neon-blue);
-  background: transparent;
-  color: var(--neon-blue);
-  cursor: pointer;
-  transition: 0.3s ease;
-  border-radius: 30px;
+.btn{
+  margin-top:35px;
+  padding:14px 32px;
+  border-radius:40px;
+  border:2px solid var(--blue);
+  background:transparent;
+  color:var(--blue);
+  cursor:pointer;
+  transition:.3s;
 }
 
-.btn:hover {
-  background: var(--neon-blue);
-  color: black;
-  box-shadow: 0 0 20px var(--neon-blue);
+.btn:hover{
+  background:var(--blue);
+  color:black;
+  box-shadow:0 0 30px var(--blue);
+  transform:scale(1.05);
 }
 
-/* Message */
-.message {
-  max-width: 600px;
-  line-height: 1.6;
-  opacity: 0.9;
+/* Neon stat cards */
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  gap:25px;
+  justify-content:center;
+  margin-top:30px;
 }
 
-/* Progress bars */
-.progress-container {
-  width: 80%;
-  max-width: 500px;
+.card{
+  width:260px;
+  padding:25px;
+  background:#111;
+  border-radius:15px;
+  border:1px solid var(--purple);
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
 }
 
-.progress-bar {
-  margin: 15px 0;
-  background: #111;
-  border-radius: 20px;
-  overflow: hidden;
+.card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 0 30px var(--purple);
 }
 
-.progress-fill {
-  height: 15px;
-  width: 0;
-  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-  transition: width 2s ease;
+/* Typing text */
+.typing{
+  margin-top:20px;
+  font-size:1.2rem;
+  opacity:.9;
+  min-height:40px;
 }
 
-/* Game */
-#game-box {
-  width: 250px;
-  height: 250px;
-  background: #111;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background 0.2s;
+/* Unlock message */
+.hidden{
+  margin-top:25px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s;
 }
 
-.score {
-  margin-top: 15px;
+.hidden.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-/* Footer */
-footer {
-  padding: 20px;
-  text-align: center;
-  opacity: 0.5;
+/* Cursor glow */
+.cursor{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--cyan);
+  position:fixed;
+  pointer-events:none;
+  mix-blend-mode:screen;
+  filter:blur(8px);
+  opacity:.7;
+  z-index:999;
+}
+
+footer{
+  padding:20px;
+  text-align:center;
+  opacity:.4;
 }
 
 @media(max-width:600px){
-  h1 { font-size: 2.2rem; }
+  h1{ font-size:2.2rem; }
 }
 </style>
 </head>
 
 <body>
+
+<div class="cursor" id="cursor"></div>
 
 <script>
 const friendName = "Gokul";
 </script>
 
-<!-- HERO -->
 <section>
-  <h1 id="heroTitle"></h1>
+  <h1 id="hero"></h1>
   <p class="subtitle">Another year. New achievements unlocked.</p>
-  <button class="btn" onclick="document.getElementById('message').scrollIntoView()">Start</button>
+  <button class="btn" onclick="nextSection()">Enter</button>
 </section>
 
-<!-- MESSAGE -->
-<section id="message">
-  <div class="message">
-    <h2>Happy Birthday</h2>
-    <p>
-      You don’t just grow older. You scale up.  
-      New skills. New wins. New chaos conquered.  
-      Keep building. Keep breaking limits.  
-      This year? Bigger moves only.
-    </p>
-  </div>
-</section>
-
-<!-- MEMORY PLACEHOLDER -->
 <section>
-  <h2>More legendary moments loading...</h2>
-  <div class="progress-container">
-    <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
-    <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
-    <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+  <h2>Core Upgrades</h2>
+  <div class="cards">
+    <div class="card">Resilience +10</div>
+    <div class="card">XP Multiplier Active</div>
+    <div class="card">Skill Tree Expanded</div>
   </div>
+  <div class="typing" id="typingText"></div>
 </section>
 
-<!-- GAME -->
 <section>
-  <h2>Reaction Time Challenge</h2>
-  <p>Wait for green. Tap fast.</p>
-  <div id="game-box">Wait...</div>
-  <div class="score">
-    <p id="result"></p>
-    <p id="best"></p>
-    <button class="btn" onclick="startGame()">Restart</button>
-  </div>
-</section>
-
-<!-- SURPRISE -->
-<section>
-  <button class="btn" onclick="unlockBonus()">Unlock Bonus</button>
-  <p id="achievement" style="margin-top:20px;"></p>
-  <button class="btn" onclick="toggleMusic()">Toggle Music</button>
+  <h2>Final Unlock</h2>
+  <button class="btn" onclick="unlock()">Unlock Achievement</button>
+  <p class="hidden" id="finalMsg">
+    Achievement Unlocked: +1 Year of Greatness.
+  </p>
 </section>
 
 <footer>
@@ -209,349 +204,50 @@ Built with code & chaos.
 </footer>
 
 <script>
-document.getElementById("heroTitle").innerText = `Level Up, ${friendName} 🎮`;
 
-/* Reaction Game */
-let startTime, timeout, bestScore = null;
-const box = document.getElementById("game-box");
-const result = document.getElementById("result");
-const best = document.getElementById("best");
+/* Dynamic Name */
+document.getElementById("hero").innerText =
+`Level Up, ${Gokul} 🎮`;
 
-function startGame(){
-  box.style.background = "#111";
-  box.innerText = "Wait...";
-  result.innerText = "";
-  timeout = setTimeout(() => {
-    box.style.background = "lime";
-    box.innerText = "CLICK!";
-    startTime = Date.now();
-  }, Math.random()*3000 + 2000);
-}
-
-box.addEventListener("click", () => {
-  if(!startTime) return;
-  let reaction = Date.now() - startTime;
-  result.innerText = `Reaction Time: ${reaction} ms`;
-  if(bestScore === null || reaction < bestScore){
-    bestScore = reaction;
-    best.innerText = `Best Score: ${bestScore} ms`;
-  }
-  startTime = null;
+/* Scroll reveal animation */
+const sections = document.querySelectorAll("section");
+window.addEventListener("scroll", ()=>{
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top < window.innerHeight-100){
+      sec.classList.add("show");
+    }
+  });
 });
 
-startGame();
-
-/* Bonus */
-function unlockBonus(){
-  document.getElementById("achievement").innerText =
-  "Achievement Unlocked: +1 Year of Greatness";
-  confetti();
+/* Smooth scroll */
+function nextSection(){
+  sections[1].scrollIntoView({behavior:"smooth"});
 }
 
-/* Simple Confetti */
-function confetti(){
-  for(let i=0;i<50;i++){
-    let conf = document.createElement("div");
-    conf.style.position="fixed";
-    conf.style.width="8px";
-    conf.style.height="8px";
-    conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    conf.style.left=Math.random()*100+"vw";
-    conf.style.top="-10px";
-    conf.style.opacity=1;
-    conf.style.zIndex=999;
-    conf.style.transition="3s linear";
-    document.body.appendChild(conf);
-    setTimeout(()=>{ conf.style.top="100vh"; conf.style.opacity=0; },10);
-    setTimeout(()=>conf.remove(),3000);
+/* Typing effect */
+const text = "You don’t age. You upgrade. This year? Bigger wins only.";
+let index = 0;
+function type(){
+  if(index < text.length){
+    document.getElementById("typingText").innerHTML += text.charAt(index);
+    index++;
+    setTimeout(type,40);
   }
 }
+type();
 
-/* Music */
-let audio = new Audio("https://www.soundjay.com/happy/sounds/happy-birthday-song-01.mp3");
-function toggleMusic(){
-  if(audio.paused){ audio.play(); }
-  else{ audio.pause(); }
+/* Unlock animation */
+function unlock(){
+  document.getElementById("finalMsg").classList.add("show");
 }
+
+/* Cursor glow */
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove",(e)=>{
+  cursor.style.left = e.clientX-9 + "px";
+  cursor.style.top = e.clientY-9 + "px";
+});
 </script>
 
 </body>
-  </html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level Up</title>
-
-<style>
-:root {
-  --bg-dark: #0a0a12;
-  --neon-blue: #00f2ff;
-  --neon-cyan: #00ffe1;
-  --neon-purple: #8a2eff;
-  --text-light: #e6faff;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-  background: var(--bg-dark);
-  color: var(--text-light);
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-/* Animated Gradient Background */
-body::before {
-  content: "";
-  position: fixed;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, #0a0a12, #111133, #0a0a12);
-  animation: gradientMove 12s ease infinite;
-  z-index: -1;
-}
-
-@keyframes gradientMove {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(-25%, -25%); }
-  100% { transform: translate(0,0); }
-}
-
-section {
-  min-height: 100vh;
-  padding: 80px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-/* Hero */
-h1 {
-  font-size: 3rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%,100% { text-shadow: 0 0 10px var(--neon-blue); }
-  50% { text-shadow: 0 0 25px var(--neon-purple); }
-}
-
-.subtitle {
-  margin-top: 15px;
-  opacity: 0.8;
-}
-
-.btn {
-  margin-top: 30px;
-  padding: 12px 28px;
-  border: 2px solid var(--neon-blue);
-  background: transparent;
-  color: var(--neon-blue);
-  cursor: pointer;
-  transition: 0.3s ease;
-  border-radius: 30px;
-}
-
-.btn:hover {
-  background: var(--neon-blue);
-  color: black;
-  box-shadow: 0 0 20px var(--neon-blue);
-}
-
-/* Message */
-.message {
-  max-width: 600px;
-  line-height: 1.6;
-  opacity: 0.9;
-}
-
-/* Progress bars */
-.progress-container {
-  width: 80%;
-  max-width: 500px;
-}
-
-.progress-bar {
-  margin: 15px 0;
-  background: #111;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 15px;
-  width: 0;
-  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-  transition: width 2s ease;
-}
-
-/* Game */
-#game-box {
-  width: 250px;
-  height: 250px;
-  background: #111;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.score {
-  margin-top: 15px;
-}
-
-/* Footer */
-footer {
-  padding: 20px;
-  text-align: center;
-  opacity: 0.5;
-}
-
-@media(max-width:600px){
-  h1 { font-size: 2.2rem; }
-}
-</style>
-</head>
-
-<body>
-
-<script>
-const friendName = "ENTER_NAME_HERE";
-</script>
-
-<!-- HERO -->
-<section>
-  <h1 id="heroTitle"></h1>
-  <p class="subtitle">Another year. New achievements unlocked.</p>
-  <button class="btn" onclick="document.getElementById('message').scrollIntoView()">Start</button>
-</section>
-
-<!-- MESSAGE -->
-<section id="message">
-  <div class="message">
-    <h2>Happy Birthday</h2>
-    <p>
-      You don’t just grow older. You scale up.  
-      New skills. New wins. New chaos conquered.  
-      Keep building. Keep breaking limits.  
-      This year? Bigger moves only.
-    </p>
-  </div>
-</section>
-
-<!-- MEMORY PLACEHOLDER -->
-<section>
-  <h2>More legendary moments loading...</h2>
-  <div class="progress-container">
-    <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
-    <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
-    <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
-  </div>
-</section>
-
-<!-- GAME -->
-<section>
-  <h2>Reaction Time Challenge</h2>
-  <p>Wait for green. Tap fast.</p>
-  <div id="game-box">Wait...</div>
-  <div class="score">
-    <p id="result"></p>
-    <p id="best"></p>
-    <button class="btn" onclick="startGame()">Restart</button>
-  </div>
-</section>
-
-<!-- SURPRISE -->
-<section>
-  <button class="btn" onclick="unlockBonus()">Unlock Bonus</button>
-  <p id="achievement" style="margin-top:20px;"></p>
-  <button class="btn" onclick="toggleMusic()">Toggle Music</button>
-</section>
-
-<footer>
-Built with code & chaos.
-</footer>
-
-<script>
-document.getElementById("heroTitle").innerText = `Level Up, ${Gokul} 🎮`;
-
-/* Reaction Game */
-let startTime, timeout, bestScore = null;
-const box = document.getElementById("game-box");
-const result = document.getElementById("result");
-const best = document.getElementById("best");
-
-function startGame(){
-  box.style.background = "#111";
-  box.innerText = "Wait...";
-  result.innerText = "";
-  timeout = setTimeout(() => {
-    box.style.background = "lime";
-    box.innerText = "CLICK!";
-    startTime = Date.now();
-  }, Math.random()*3000 + 2000);
-}
-
-box.addEventListener("click", () => {
-  if(!startTime) return;
-  let reaction = Date.now() - startTime;
-  result.innerText = `Reaction Time: ${reaction} ms`;
-  if(bestScore === null || reaction < bestScore){
-    bestScore = reaction;
-    best.innerText = `Best Score: ${bestScore} ms`;
-  }
-  startTime = null;
-});
-
-startGame();
-
-/* Bonus */
-function unlockBonus(){
-  document.getElementById("achievement").innerText =
-  "Achievement Unlocked: +1 Year of Greatness";
-  confetti();
-}
-
-/* Simple Confetti */
-function confetti(){
-  for(let i=0;i<50;i++){
-    let conf = document.createElement("div");
-    conf.style.position="fixed";
-    conf.style.width="8px";
-    conf.style.height="8px";
-    conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    conf.style.left=Math.random()*100+"vw";
-    conf.style.top="-10px";
-    conf.style.opacity=1;
-    conf.style.zIndex=999;
-    conf.style.transition="3s linear";
-    document.body.appendChild(conf);
-    setTimeout(()=>{ conf.style.top="100vh"; conf.style.opacity=0; },10);
-    setTimeout(()=>conf.remove(),3000);
-  }
-}
-
-/* Music */
-let audio = new Audio("https://www.soundjay.com/happy/sounds/happy-birthday-song-01.mp3");
-function toggleMusic(){
-  if(audio.paused){ audio.play(); }
-  else{ audio.pause(); }
-}
-</script>
-
-</body>
-</html> 
+</html>
